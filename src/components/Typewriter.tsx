@@ -3,10 +3,11 @@ import './Typewriter.css';
 
 interface TypewriterProps {
   onType?: (text: string) => void;
+  text: string;
+  onTextChange: (text: string) => void;
 }
 
-const Typewriter: React.FC<TypewriterProps> = ({ onType }) => {
-  const [text, setText] = useState('');
+const Typewriter: React.FC<TypewriterProps> = ({ onType, text, onTextChange }) => {
   const [caretPosition, setCaretPosition] = useState({ line: 0, char: 0 });
   const [caretVisible, setCaretVisible] = useState(true);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
@@ -32,7 +33,7 @@ const Typewriter: React.FC<TypewriterProps> = ({ onType }) => {
       e.preventDefault();
       const lines = text.split('\n');
       if (lines.length < 30) {
-        setText(text + '\n');
+        onTextChange(text + '\n');
         setCaretPosition({ line: caretPosition.line + 1, char: 0 });
       }
     }
@@ -40,7 +41,7 @@ const Typewriter: React.FC<TypewriterProps> = ({ onType }) => {
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newText = e.target.value;
-    setText(newText);
+    onTextChange(newText);
     
     const lines = newText.split('\n');
     const currentLine = lines.length - 1;
