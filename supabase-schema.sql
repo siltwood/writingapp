@@ -10,8 +10,8 @@ CREATE TABLE IF NOT EXISTS stories (
 );
 
 -- Create index for faster queries
-CREATE INDEX idx_stories_updated_at ON stories(updated_at DESC);
-CREATE INDEX idx_stories_share_id ON stories(share_id) WHERE share_id IS NOT NULL;
+CREATE INDEX IF NOT EXISTS idx_stories_updated_at ON stories(updated_at DESC);
+CREATE INDEX IF NOT EXISTS idx_stories_share_id ON stories(share_id) WHERE share_id IS NOT NULL;
 
 -- Enable Row Level Security
 ALTER TABLE stories ENABLE ROW LEVEL SECURITY;
