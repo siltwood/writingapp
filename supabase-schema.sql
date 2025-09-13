@@ -16,6 +16,9 @@ CREATE INDEX IF NOT EXISTS idx_stories_share_id ON stories(share_id) WHERE share
 -- Enable Row Level Security
 ALTER TABLE stories ENABLE ROW LEVEL SECURITY;
 
+-- Drop existing policy if it exists and recreate
+DROP POLICY IF EXISTS "Allow all operations on stories" ON stories;
+
 -- Create policy to allow all operations for now (you can customize this based on auth)
 CREATE POLICY "Allow all operations on stories" ON stories
   FOR ALL USING (true);
