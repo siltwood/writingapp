@@ -11,9 +11,10 @@ import {
   Copy,
   Check
 } from 'lucide-react';
-import { Story, storyService } from '../lib/localStorage';
+import { Story, storyService } from '../lib/api';
 import toast, { Toaster } from 'react-hot-toast';
 import './Sidebar.css';
+import '../styles/shared.css';
 
 interface SidebarProps {
   currentStory: Story | null;
@@ -21,6 +22,8 @@ interface SidebarProps {
   onNewStory: () => void;
   text: string;
   onTextChange: (text: string) => void;
+  isAuthenticated?: boolean;
+  onAuthRequired?: () => void;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ 
@@ -28,7 +31,9 @@ const Sidebar: React.FC<SidebarProps> = ({
   onStoryLoad, 
   onNewStory,
   text,
-  onTextChange 
+  onTextChange,
+  isAuthenticated = false,
+  onAuthRequired = () => {}
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [stories, setStories] = useState<Story[]>([]);
@@ -43,8 +48,10 @@ const Sidebar: React.FC<SidebarProps> = ({
   }, [currentStory]);
 
   useEffect(() => {
-    loadStories();
-  }, []);
+    if (isAuthenticated) {
+      loadStories();
+    }
+  }, [isAuthenticated]);
 
   const loadStories = async () => {
     try {
@@ -56,6 +63,15 @@ const Sidebar: React.FC<SidebarProps> = ({
   };
 
   const handleSave = async () => {
+    if (!isAuthenticated) {
+      toast('Sign up to save your stories!', {
+        icon: '🔐',
+        duration: 3000
+      });
+      onAuthRequired();
+      return;
+    }
+
     if (!storyTitle.trim()) {
       toast.error('Please enter a title for your story');
       return;
@@ -83,6 +99,11 @@ const Sidebar: React.FC<SidebarProps> = ({
   };
 
   const handleDelete = async (id: string) => {
+    if (!isAuthenticated) {
+      onAuthRequired();
+      return;
+    }
+    
     if (!window.confirm('Are you sure you want to delete this story?')) return;
 
     try {
@@ -98,6 +119,15 @@ const Sidebar: React.FC<SidebarProps> = ({
   };
 
   const handleShare = async () => {
+    if (!isAuthenticated) {
+      toast('Sign up to share your stories!', {
+        icon: '🔐',
+        duration: 3000
+      });
+      onAuthRequired();
+      return;
+    }
+
     if (!currentStory?.id) {
       toast.error('Please save your story first');
       return;
@@ -118,6 +148,11 @@ const Sidebar: React.FC<SidebarProps> = ({
   };
 
   const handleLoadStory = async (story: Story) => {
+    if (!isAuthenticated) {
+      onAuthRequired();
+      return;
+    }
+    
     onStoryLoad(story);
     onTextChange(story.content);
     setStoryTitle(story.title);
@@ -136,7 +171,7 @@ const Sidebar: React.FC<SidebarProps> = ({
       <Toaster position="top-right" />
       
       <button
-        className="menu-toggle"
+        className="close-button-standard close-button-toggle"
         onClick={() => setIsOpen(!isOpen)}
         aria-label="Toggle menu"
       >
@@ -146,12 +181,6 @@ const Sidebar: React.FC<SidebarProps> = ({
       <div className={`sidebar ${isOpen ? 'sidebar-open' : ''}`}>
         <div className="sidebar-header">
           <h2>Typewriter Studio</h2>
-          <button 
-            className="close-btn"
-            onClick={() => setIsOpen(false)}
-          >
-            <X size={20} />
-          </button>
         </div>
 
         <div className="story-controls">
@@ -201,7 +230,18 @@ const Sidebar: React.FC<SidebarProps> = ({
           </h3>
           
           <div className="stories-list">
-            {stories.length === 0 ? (
+            {!isAuthenticated ? (
+              <div className="auth-prompt">
+                <p className="no-stories">Sign up to save your stories!</p>
+                <button 
+                  onClick={onAuthRequired}
+                  className="control-btn"
+                  style={{ margin: '10px auto', display: 'block' }}
+                >
+                  Sign Up / Sign In
+                </button>
+              </div>
+            ) : stories.length === 0 ? (
               <p className="no-stories">No stories yet. Start typing!</p>
             ) : (
               stories.map((story) => (

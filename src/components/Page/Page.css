@@ -1,0 +1,100 @@
+/* Wrapper allows for padding/spacing control from parent */
+.page-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* The actual page container with borders */
+.page-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #f4f1e8;
+  min-height: 400px; /* Minimum height for the page */
+  min-width: 600px; /* Minimum width for the page */
+}
+
+/* Corners */
+.page-corner {
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  image-rendering: pixelated;
+  z-index: 10;
+}
+
+.page-corner.tl { top: 0; left: 0; }
+.page-corner.tr { top: 0; right: 0; }
+.page-corner.bl { bottom: 0; left: 0; }
+.page-corner.br { bottom: 0; right: 0; }
+
+/* Edges */
+.page-edge {
+  position: absolute;
+  image-rendering: pixelated;
+  z-index: 9;
+}
+
+.page-edge.top {
+  top: 0;
+  left: 64px;
+  right: 64px;
+  height: 64px;
+  background-repeat: repeat-x;
+  background-size: 64px 64px;
+}
+
+.page-edge.bottom {
+  bottom: 0;
+  left: 64px;
+  right: 64px;
+  height: 64px;
+  background-repeat: repeat-x;
+  background-size: 64px 64px;
+}
+
+.page-edge.left {
+  left: 0;
+  top: 64px;
+  bottom: 64px;
+  width: 64px;
+  background-repeat: repeat-y;
+  background-size: 64px 64px;
+}
+
+.page-edge.right {
+  right: 0;
+  top: 64px;
+  bottom: 64px;
+  width: 64px;
+  background-repeat: repeat-y;
+  background-size: 64px 64px;
+}
+
+/* Content area - this is where the text editor goes */
+.page-content {
+  position: absolute;
+  top: 64px;
+  left: 64px;
+  right: 64px;
+  bottom: 64px;
+  overflow: auto;
+  padding: 20px;
+  font-family: 'Courier Prime', monospace;
+  line-height: 1.6;
+}
+
+/* Make it responsive */
+@media (max-width: 768px) {
+  .page-container {
+    min-width: 100%;
+    min-height: 100%;
+  }
+  
+  .page-content {
+    padding: 15px;
+  }
+}

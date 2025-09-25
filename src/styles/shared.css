@@ -1,0 +1,116 @@
+/* Shared styles for consistent UI components */
+
+/* Standard spinning close button - USE THIS FOR ALL CLOSE BUTTONS */
+.close-button-standard {
+  position: absolute;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  border-radius: 4px;
+}
+
+/* Dark theme close button */
+.close-button-dark {
+  color: #f4f1e8;
+  top: 15px;
+  left: 15px;
+}
+
+.close-button-dark:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: rotate(90deg);
+}
+
+/* Light theme close button */
+.close-button-light {
+  color: rgba(139, 119, 101, 0.8);
+  top: 15px;
+  left: 15px;
+}
+
+.close-button-light:hover {
+  background: rgba(139, 119, 101, 0.1);
+  color: #1a1a1a;
+  transform: rotate(90deg);
+}
+
+/* Toggle variant (for menu toggles) */
+.close-button-toggle {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 1000;
+  background: rgba(42, 42, 42, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #f4f1e8;
+  padding: 12px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.close-button-toggle:hover {
+  background: rgba(52, 52, 52, 0.95);
+  transform: scale(1.05) rotate(90deg);
+}
+
+/* Standard modal overlay behavior */
+.modal-overlay-standard {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 998;
+  animation: fadeIn 0.3s ease;
+  cursor: pointer;
+}
+
+.modal-content-standard {
+  cursor: auto;
+  position: relative;
+}
+
+/* Fade in animation */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Standard button hover effects */
+.hover-lift {
+  transition: all 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-1px);
+}
+
+.hover-scale {
+  transition: all 0.3s ease;
+}
+
+.hover-scale:hover {
+  transform: scale(1.05);
+}
+
+/* Standard transitions */
+.transition-standard {
+  transition: all 0.3s ease;
+}
+
+.transition-fast {
+  transition: all 0.2s ease;
+}
+
+.transition-slow {
+  transition: all 0.5s ease;
+}

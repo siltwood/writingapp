@@ -2,13 +2,45 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Typewriter from './components/Typewriter';
 import Sidebar from './components/Sidebar';
-import { Story, storyService } from './lib/localStorage';
+import Login from './components/Login';
+import Page from './components/Page/Page';
+import { Story, storyService, api } from './lib/api';
 import './App.css';
 
 function App() {
   const [text, setText] = useState('');
   const [currentStory, setCurrentStory] = useState<Story | null>(null);
+  const [user, setUser] = useState<any>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
   const { shareId } = useParams<{ shareId?: string }>();
+
+  useEffect(() => {
+    // Check for existing auth
+    const token = localStorage.getItem('token');
+    const savedUser = localStorage.getItem('user');
+    if (token && savedUser) {
+      // Verify token is still valid
+      api.verifyToken().then(result => {
+        setUser(result.user);
+        setIsAuthenticated(true);
+      }).catch(() => {
+        // Token invalid, clear auth
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+      });
+    }
+
+    // Check for auth callback from Google OAuth
+    const urlParams = new URLSearchParams(window.location.search);
+    const token_param = urlParams.get('token');
+    if (token_param) {
+      localStorage.setItem('token', token_param);
+      setIsAuthenticated(true);
+      // Clean up URL
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+  }, []);
 
   useEffect(() => {
     if (shareId) {
@@ -53,22 +85,58 @@ function App() {
     setText(newText);
   };
 
+  const handleLogin = (token: string, user: any) => {
+    if (token === 'guest') {
+      setShowLogin(false);
+      return;
+    }
+    setUser(user);
+    setIsAuthenticated(true);
+    setShowLogin(false);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    setUser(null);
+    setIsAuthenticated(false);
+  };
+
   return (
     <div className="App">
-      {!shareId && (
-        <Sidebar
-          currentStory={currentStory}
-          onStoryLoad={handleStoryLoad}
-          onNewStory={handleNewStory}
-          text={text}
-          onTextChange={handleTextChange}
-        />
+      {showLogin && (
+        <Login onLogin={handleLogin} />
       )}
-      <Typewriter 
-        text={text}
-        onTextChange={handleTextChange}
-        onType={(text) => console.log('Typing:', text.length, 'characters')}
-      />
+      
+      {!shareId && (
+        <>
+          <Sidebar
+            currentStory={currentStory}
+            onStoryLoad={handleStoryLoad}
+            onNewStory={handleNewStory}
+            text={text}
+            onTextChange={handleTextChange}
+            isAuthenticated={isAuthenticated}
+            onAuthRequired={() => setShowLogin(true)}
+          />
+          
+        </>
+      )}
+      
+      <Page padding="80px">
+        <div className="editor-content">
+          <textarea
+            value={text}
+            onChange={(e) => handleTextChange(e.target.value)}
+            className="text-editor"
+            placeholder="Start typing..."
+            autoFocus
+          />
+          <div className="text-display">
+            {text}
+          </div>
+        </div>
+      </Page>
     </div>
   );
 }

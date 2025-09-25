@@ -3,7 +3,15 @@ import { createClient } from '@supabase/supabase-js';
 const supabaseUrl = process.env.REACT_APP_SUPABASE_URL || '';
 const supabaseAnonKey = process.env.REACT_APP_SUPABASE_ANON_KEY || '';
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+// Check if credentials are provided
+const hasSupabaseCredentials = supabaseUrl && supabaseAnonKey && 
+  supabaseUrl !== 'your_supabase_url_here' && 
+  supabaseAnonKey !== 'your_supabase_anon_key_here';
+
+// Create client only if we have valid credentials
+export const supabase = hasSupabaseCredentials 
+  ? createClient(supabaseUrl, supabaseAnonKey)
+  : null as any;
 
 export interface Story {
   id?: string;
@@ -17,6 +25,10 @@ export interface Story {
 
 export const storyService = {
   async saveStory(story: Story) {
+    if (!supabase) {
+      console.warn('Supabase not configured - using localStorage');
+      return story;
+    }
     const { data, error } = await supabase
       .from('stories')
       .upsert(story)

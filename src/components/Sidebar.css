@@ -1,25 +1,4 @@
-.menu-toggle {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  z-index: 1000;
-  background: rgba(42, 42, 42, 0.9);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #f4f1e8;
-  padding: 12px;
-  border-radius: 8px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-
-.menu-toggle:hover {
-  background: rgba(52, 52, 52, 0.95);
-  transform: scale(1.05);
-}
+/* Menu toggle styles moved to shared.css as close-button-toggle */
 
 .sidebar {
   position: fixed;
@@ -57,12 +36,12 @@
 }
 
 .sidebar-header {
-  padding: 20px;
+  padding: 30px 20px 20px 20px;
+  margin-top: 50px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  background: rgba(0, 0, 0, 0.2);
 }
 
 .sidebar-header h2 {
@@ -73,21 +52,7 @@
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-.close-btn {
-  background: transparent;
-  border: none;
-  color: #f4f1e8;
-  cursor: pointer;
-  padding: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.2s;
-}
-
-.close-btn:hover {
-  transform: rotate(90deg);
-}
+/* Close button styles moved to shared.css for consistency */
 
 .story-controls {
   padding: 20px;

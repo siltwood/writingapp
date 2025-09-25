@@ -1,25 +1,9 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-.App {
+.test-container {
   width: 100vw;
   height: 100vh;
   background: linear-gradient(135deg, #2c1810 0%, #1a0f08 100%);
   margin: 0;
   padding: 0;
-  overflow: hidden;
 }
 
 .editor-content {
@@ -64,4 +48,23 @@ body {
   word-break: break-word;
   pointer-events: none;
   z-index: 1;
+}
+
+.cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1.2em;
+  background: #2a2a2a;
+  margin-left: 1px;
+  opacity: 0;
+  transition: opacity 0.1s;
+}
+
+.cursor.visible {
+  opacity: 1;
+}
+
+@keyframes blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
 }

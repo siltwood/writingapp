@@ -1,0 +1,33 @@
+/* Color Constants for Typewriter Studio */
+/* Pixel Art Color Palette */
+
+:root {
+  /* Current Colors (existing in app) */
+  --color-paper: #f4f1e8;
+  --color-dark-start: #2a2a2a;
+  --color-dark-end: #1a1a1a;
+  --color-text-dark: #1a1a1a;
+  --color-text-light: #f4f1e8;
+  
+  /* Pixel Art Palette (to be updated with your hex codes) */
+  --pixel-primary: #000000;
+  --pixel-secondary: #ffffff;
+  --pixel-accent-1: #ff0000;
+  --pixel-accent-2: #00ff00;
+  --pixel-accent-3: #0000ff;
+  
+  /* Border/Frame Colors */
+  --pixel-border-dark: #000000;
+  --pixel-border-light: #ffffff;
+  --pixel-border-shadow: #808080;
+  
+  /* Stamp/Effect Colors */
+  --pixel-stamp-red: #cc0000;
+  --pixel-stamp-blue: #0000cc;
+  --pixel-stamp-black: #000000;
+  
+  /* Paper Effects */
+  --pixel-stain: #d4c4a0;
+  --pixel-ink: #000033;
+  --pixel-pencil: #666666;
+}
