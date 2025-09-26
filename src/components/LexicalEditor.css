@@ -1,0 +1,83 @@
+/* Container for the Lexical editor */
+.lexical-editor-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+/* The actual editable area - styled to match your typewriter */
+.lexical-editor-input {
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  margin: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: 'Courier Prime', monospace;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #2a2a2a;
+  caret-color: #2a2a2a;
+  overflow-y: auto;
+  box-sizing: border-box;
+  resize: none;
+  min-height: 100%;
+}
+
+/* Remove all Lexical's default styling */
+.lexical-editor-input p {
+  margin: 0;
+  padding: 0;
+}
+
+.lexical-editor-input:focus {
+  outline: none;
+}
+
+/* Placeholder text styling */
+.lexical-editor-placeholder {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  color: #999;
+  font-family: 'Courier Prime', monospace;
+  font-size: 16px;
+  line-height: 1.6;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Override any Lexical default styles */
+.ContentEditable__root {
+  position: relative;
+  outline: none;
+  min-height: 100%;
+}
+
+/* Selection styling */
+.lexical-editor-input ::selection {
+  background: rgba(42, 42, 42, 0.2);
+}
+
+.lexical-editor-input ::-moz-selection {
+  background: rgba(42, 42, 42, 0.2);
+}
+
+/* Scrollbar styling to match retro aesthetic */
+.lexical-editor-input::-webkit-scrollbar {
+  width: 12px;
+}
+
+.lexical-editor-input::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.lexical-editor-input::-webkit-scrollbar-thumb {
+  background: rgba(42, 42, 42, 0.3);
+  border-radius: 0;
+}
+
+.lexical-editor-input::-webkit-scrollbar-thumb:hover {
+  background: rgba(42, 42, 42, 0.5);
+}

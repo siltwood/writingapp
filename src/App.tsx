@@ -4,6 +4,7 @@ import Typewriter from './components/Typewriter';
 import Sidebar from './components/Sidebar';
 import Login from './components/Login';
 import Page from './components/Page/Page';
+import LexicalEditor from './components/LexicalEditor';
 import { Story, storyService, api } from './lib/api';
 import './App.css';
 
@@ -124,18 +125,11 @@ function App() {
       )}
       
       <Page padding="80px">
-        <div className="editor-content">
-          <textarea
-            value={text}
-            onChange={(e) => handleTextChange(e.target.value)}
-            className="text-editor"
-            placeholder="Start typing..."
-            autoFocus
-          />
-          <div className="text-display">
-            {text}
-          </div>
-        </div>
+        <LexicalEditor
+          value={text}
+          onChange={handleTextChange}
+          placeholder="Start typing..."
+        />
       </Page>
     </div>
   );
