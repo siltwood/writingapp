@@ -158,10 +158,11 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
             {isSignUp && (
               <input
                 type="text"
-                placeholder="Name (optional)"
+                placeholder="Name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 className="login-input"
+                required
               />
             )}
             <input
